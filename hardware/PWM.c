@@ -9,8 +9,8 @@ void PWM_Init(void){
     TIM_TimeBaseInitTypeDef time_init;
     time_init.TIM_ClockDivision = TIM_CKD_DIV1;
     time_init.TIM_CounterMode = TIM_CounterMode_Up;
-    time_init.TIM_Prescaler = 36-1;     // 72/36 = 2Mhz
-    time_init.TIM_Period = 100;          // RCC
+    time_init.TIM_Prescaler = 720-1;     // 72/72= 1Mhz 
+    time_init.TIM_Period = 100-1;          // RCC
     TIM_TimeBaseInit(TIM2,&time_init);
 
     // 3. OC conf
@@ -19,14 +19,12 @@ void PWM_Init(void){
     oc_init.TIM_OutputState = ENABLE;
     oc_init.TIM_OCPolarity = TIM_OCPolarity_High;
     oc_init.TIM_Pulse = 15;// CCR
-    TIM_OC3Init(TIM2,&oc_init);     // TIM2 's OC CH3 -> PA2
-    TIM_OC1
-    Init(TIM2,&oc_init);     // TIM2 's OC CH3 -> PA2
+    TIM_OC1Init(TIM2,&oc_init);     // TIM2 's OC CH3 -> PA1
 
-    // 4. GPIO conf
+    // 5. GPIO conf
     GPIO_InitTypeDef init;
     init.GPIO_Mode = GPIO_Mode_AF_PP;
-    init.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_0;
+    init.GPIO_Pin = GPIO_Pin_0;     // PWM output
     init.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_Init(GPIOA,&init);
 
@@ -34,7 +32,13 @@ void PWM_Init(void){
     TIM_Cmd(TIM2,ENABLE);
 };
 
-void PWM_SetCompare(uint16_t compare){
+
+// Set Prescalar
+void PWM_SetPrescalar(uint16_t prescalar){
+    TIM_PrescalerConfig(TIM2,prescalar,TIM_PSCReloadMode_Immediate);
+}
+
+// Set compare: CCR
+void PWM_SetCompare1(uint8_t compare){
     TIM_SetCompare1(TIM2,compare);
-    TIM_SetCompare3(TIM2,compare);
-};
+}

@@ -3,5 +3,6 @@
 
 void PWM_Init(void);
 
-void PWM_SetCompare(uint16_t compare);
+void PWM_SetCompare1(uint16_t compare);
+void PWM_SetPrescalar(uint16_t prescalar);
 #endif

@@ -60,7 +60,7 @@ void EXTI9_5_IRQHandler(void){
                 if(count > TIM2->ARR){
                     count = 0;
                 }
-                PWM_SetCompare(count);
+                PWM_SetCompare1(count);
             }
         }
         // clear
@@ -81,7 +81,7 @@ void EXTI15_10_IRQHandler(void){
                 }else{
                     count--;
                 }
-                PWM_SetCompare(count);
+                PWM_SetCompare1(count);
             }
         };
         // clear

@@ -30,5 +30,5 @@
 .\objects\main.o: .\library\misc.h
 .\objects\main.o: .\hardware\OLED.h
 .\objects\main.o: .\hardware\PWM.h
-.\objects\main.o: .\hardware\Rotary.h
-.\objects\main.o: .\hardware\Motor.h
+.\objects\main.o: .\hardware\IC.h
+.\objects\main.o: .\system\Delay.h
