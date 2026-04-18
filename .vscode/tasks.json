@@ -1,0 +1,32 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Keil 编译并下载",
+            "type": "shell",
+            "command": "C:/Keil_v5/UV4/UV4.exe",
+            "args": [
+                "-b",
+                "${workspaceFolder}/playground.uvprojx",
+                "-f",
+                "${workspaceFolder}/playground.uvprojx"
+            ],
+            "problemMatcher": {
+                "owner": "c",
+                "fileLocation": "absolute",
+                "pattern": {
+                    "regexp": "^(.*?)\\((\\d+),(\\d+)\\):\\s+(error|warning)#\\d+:\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
