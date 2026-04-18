@@ -53,15 +53,12 @@ void EXTI9_5_IRQHandler(void){
     // Line 9?
     if(EXTI_GetITStatus(EXTI_Line9)!=RESET){
         if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_11) == SET){
-            Delay_ms(1);   // Agains noise of PWM
-            if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_11) == SET){
-                // logic
-                count ++;
-                if(count > TIM2->ARR){
-                    count = 0;
-                }
-                PWM_SetCompare1(count);
+            // logic
+            count ++;
+            if(count > TIM2->ARR){
+                count = 0;
             }
+            PWM_SetCompare1(count);
         }
         // clear
         EXTI_ClearITPendingBit(EXTI_Line9);
@@ -72,17 +69,13 @@ void EXTI15_10_IRQHandler(void){
     // Line 11?
     if(EXTI_GetITStatus(EXTI_Line11)!=RESET){
         if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_9) == SET){
-            Delay_ms(1);
-            
-            if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_9) == SET){
-                // logic
-                if(count==0){
-                    count = TIM2->ARR;
-                }else{
-                    count--;
-                }
-                PWM_SetCompare1(count);
+            // logic
+            if(count==0){
+                count = TIM2->ARR;
+            }else{
+                count--;
             }
+            PWM_SetCompare1(count);
         };
         // clear
         EXTI_ClearITPendingBit(EXTI_Line11);

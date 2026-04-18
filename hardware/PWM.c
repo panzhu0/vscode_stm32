@@ -18,7 +18,7 @@ void PWM_Init(void){
     oc_init.TIM_OCMode = TIM_OCMode_PWM1;
     oc_init.TIM_OutputState = ENABLE;
     oc_init.TIM_OCPolarity = TIM_OCPolarity_High;
-    oc_init.TIM_Pulse = 15;// CCR
+    oc_init.TIM_Pulse = 93;// CCR
     TIM_OC1Init(TIM2,&oc_init);     // TIM2 's OC CH3 -> PA1
 
     // 5. GPIO conf
