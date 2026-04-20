@@ -2,25 +2,20 @@
 #include "OLED.h"
 #include "Delay.h"
 
-#include "Encoder.h"
 #include "Timer.h"
 
-int16_t speed;
 
+// Review: Timer interrupt & EXIT interrupt
+// Write both TIM & EXTI interrupt into Timer.c / .h
+// Write interrupt function in main.c
 int main(void){
     OLED_Init();
-    Timer_Init();
-    Encoder_Init();
-    OLED_ShowString(1,1,"Speed: ");
+    TimerTest_Init();
+    EXTITest_Init();
+    OLED_ShowString(1,1,"Count: ");
+    OLED_ShowString(2,1,"Count_exti: ");
     while(1){
-        OLED_ShowSignedNum(1,8,speed,4);
-    };
-}
-
-// Timer2 's interrupt function
-void TIM2_IRQHandler(){
-    if(TIM_GetITStatus(TIM2,TIM_IT_Update) == SET){
-        speed = Encoder_Get();
-        TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
+        OLED_ShowNum(1,7,GetCount(),3);
+        OLED_ShowNum(2,12,Get_Count_Exti(),3);
     }
 }
