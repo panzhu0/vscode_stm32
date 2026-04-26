@@ -2,6 +2,6 @@
 #define __ROTARY_H
 
 void Rotary_Init(void);
-void Show(void);
+int16_t Get_Count_Rotary(void);
 
 #endif

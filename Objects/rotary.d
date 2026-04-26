@@ -28,6 +28,3 @@
 .\objects\rotary.o: .\library\stm32f10x_usart.h
 .\objects\rotary.o: .\library\stm32f10x_wwdg.h
 .\objects\rotary.o: .\library\misc.h
-.\objects\rotary.o: hardware\PWM.h
-.\objects\rotary.o: .\system\Delay.h
-.\objects\rotary.o: hardware\OLED.h
