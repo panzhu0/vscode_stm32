@@ -1,32 +1,58 @@
 #include "stm32f10x.h"
 #include "OLED.h"
 #include "Delay.h"
-#include "AD.h"
+#include "MyDMA.h"
 
-uint16_t AD0;
-uint16_t AD1;
-uint16_t AD2;
-uint16_t AD3;
+const uint8_t DataA[] = {0x01,0x02,0x03,0x04};  // In ROM memory (if const)
+uint8_t DataB[] = {0,0,0,0};
 
 int main(){
     OLED_Init();
-    AD_Init();
 
-    OLED_ShowString(1,1,"AD1 : ");
-    OLED_ShowString(2,1,"AD2 : ");
-    OLED_ShowString(3,1,"AD3 : ");
-    OLED_ShowString(4,1,"AD4 : ");
+    My_DMA_Init((uint32_t)DataA,(uint32_t)DataB,4);
 
-    while(1){
-        AD0 = AD_GetValue(ADC_Channel_0);
-        AD1 = AD_GetValue(ADC_Channel_1);
-        AD2 = AD_GetValue(ADC_Channel_2);
-        AD3 = AD_GetValue(ADC_Channel_3);
+    OLED_ShowString(1,1,"DataA");
+    OLED_ShowHexNum(1,8,(uint32_t)DataA,8);
+    OLED_ShowString(3,1,"DataB");
+    OLED_ShowHexNum(3,8,(uint32_t)DataB,8);
 
-        OLED_ShowNum(1,7,AD0,4);
-        OLED_ShowNum(2,7,AD1,4);
-        OLED_ShowNum(3,7,AD2,4);
-        OLED_ShowNum(4,7,AD3,4);
-        Delay_ms(100);
-    }
+    OLED_ShowHexNum(2,1,DataA[0],2);
+    OLED_ShowHexNum(2,4,DataA[1],2);
+    OLED_ShowHexNum(2,7,DataA[2],2);
+    OLED_ShowHexNum(2,10,DataA[3],2);
+
+    OLED_ShowHexNum(4,1,DataB[0],2);
+    OLED_ShowHexNum(4,4,DataB[1],2);
+    OLED_ShowHexNum(4,7,DataB[2],2);
+    OLED_ShowHexNum(4,10,DataB[3],2);
+
+    while (1){
+        // DataA[0]++;
+        // DataA[1]++;
+        // DataA[2]++;
+        // DataA[3]++;
+        OLED_ShowHexNum(2,1,DataA[0],2);
+        OLED_ShowHexNum(2,4,DataA[1],2);
+        OLED_ShowHexNum(2,7,DataA[2],2);
+        OLED_ShowHexNum(2,10,DataA[3],2);
+
+        OLED_ShowHexNum(4,1,DataB[0],2);
+        OLED_ShowHexNum(4,4,DataB[1],2);
+        OLED_ShowHexNum(4,7,DataB[2],2);
+        OLED_ShowHexNum(4,10,DataB[3],2);
+
+        Delay_s(1);
+        DMA_Transfer();
+
+        OLED_ShowHexNum(2,1,DataA[0],2);
+        OLED_ShowHexNum(2,4,DataA[1],2);
+        OLED_ShowHexNum(2,7,DataA[2],2);
+        OLED_ShowHexNum(2,10,DataA[3],2);
+
+        OLED_ShowHexNum(4,1,DataB[0],2);
+        OLED_ShowHexNum(4,4,DataB[1],2);
+        OLED_ShowHexNum(4,7,DataB[2],2);
+        OLED_ShowHexNum(4,10,DataB[3],2);
+        Delay_s(1);
+    };
 }

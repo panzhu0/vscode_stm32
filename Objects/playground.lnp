@@ -28,6 +28,7 @@
 ".\objects\main.o"
 ".\objects\stm32f10x_it.o"
 ".\objects\delay.o"
+".\objects\mydma.o"
 ".\objects\encoder.o"
 ".\objects\ic.o"
 ".\objects\motor.o"

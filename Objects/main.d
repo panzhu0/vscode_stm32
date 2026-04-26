@@ -30,4 +30,4 @@
 .\objects\main.o: .\library\misc.h
 .\objects\main.o: .\hardware\OLED.h
 .\objects\main.o: .\system\Delay.h
-.\objects\main.o: .\hardware\AD.h
+.\objects\main.o: .\system\MyDMA.h
