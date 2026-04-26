@@ -9,10 +9,9 @@ void AD_Init(void){
 
     GPIO_InitTypeDef init;
     init.GPIO_Mode = GPIO_Mode_AIN;
-    init.GPIO_Pin = GPIO_Pin_0;
+    init.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3;
     GPIO_Init(GPIOA,&init);
 
-    ADC_RegularChannelConfig(ADC1,ADC_Channel_0,1,ADC_SampleTime_55Cycles5);   // ADC CH0 -> PA0
 
     ADC_InitTypeDef adc_init;
     adc_init.ADC_Mode = ADC_Mode_Independent;
@@ -28,13 +27,14 @@ void AD_Init(void){
     ADC_ResetCalibration(ADC1);
     while(ADC_GetResetCalibrationStatus(ADC1)==SET);
     ADC_StartCalibration(ADC1);
-    while(ADC_GetCalibrationStatus(ADC2) == SET);
+    while(ADC_GetCalibrationStatus(ADC1) == SET);
+
 }
 
 
-uint16_t AD_GetValue(void){
+uint16_t AD_GetValue(uint8_t ADC_Channel){
+    ADC_RegularChannelConfig(ADC1,ADC_Channel,1,ADC_SampleTime_55Cycles5);   // ADC CH0 -> PA0
     ADC_SoftwareStartConvCmd(ADC1,ENABLE);
-    while(ADC_GetFlagStatus(ADC1,ADC_FLAG_EOC) == RESET);   // 55.5 + 12.5 = 68 Cycles -> 1/12M * 68 ~= 5.6us
-
+    while(!ADC_GetFlagStatus(ADC1,ADC_FLAG_EOC));
     return ADC_GetConversionValue(ADC1);
 }
