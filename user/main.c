@@ -12,7 +12,7 @@ int main(){
     OLED_ShowString(3,1,"AD2: ");
     OLED_ShowString(4,1,"AD3: ");
     while (1){
-        AD_GetValue();
+        // AD_GetValue(); // USE ADC continuous + DMA circular . Not need to get data manually
 
         OLED_ShowNum(1,5,AD_Value[0],4);
         OLED_ShowNum(2,5,AD_Value[1],4);
