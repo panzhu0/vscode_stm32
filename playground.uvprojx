@@ -775,6 +775,16 @@
               <FileType>5</FileType>
               <FilePath>.\hardware\AD.h</FilePath>
             </File>
+            <File>
+              <FileName>Fun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\hardware\Fun.c</FilePath>
+            </File>
+            <File>
+              <FileName>Fun.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\hardware\Fun.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

@@ -49,13 +49,13 @@ void EXTI15_10_IRQHandler(void){
     }
 }
 
-void EXTI9_5_IRQHandler(void){
-    if(EXTI_GetITStatus(EXTI_Line8) != RESET){
-        if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_11) != GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_8)) count_rotary-=1;
+// void EXTI9_5_IRQHandler(void){
+//     if(EXTI_GetITStatus(EXTI_Line8) != RESET){
+//         if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_11) != GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_8)) count_rotary-=1;
 
-        EXTI_ClearITPendingBit(EXTI_Line8);
-    }
-}
+//         EXTI_ClearITPendingBit(EXTI_Line8);
+//     }
+// }
 
 int16_t Get_Count_Rotary(void){
     return count_rotary;
