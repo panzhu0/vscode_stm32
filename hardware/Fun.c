@@ -16,17 +16,17 @@ void Fun_Init(void){
     init.GPIO_Pin = GPIO_Pin_14;
     GPIO_Init(GPIOB,&init);
 
-    init.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_12;
+    init.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_11;
     GPIO_Init(GPIOA,&init);
 
     // AFIO
     GPIO_EXTILineConfig(GPIO_PortSourceGPIOB,GPIO_PinSource14);
     GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource8);
-    GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource12);
+    GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource11);
 
     // EXTI
     EXTI_InitTypeDef exti_init;
-    exti_init.EXTI_Line = EXTI_Line8 |EXTI_Line12 | EXTI_Line14; 
+    exti_init.EXTI_Line = EXTI_Line8 |EXTI_Line11 | EXTI_Line14; 
     exti_init.EXTI_LineCmd = ENABLE;
     exti_init.EXTI_Mode = EXTI_Mode_Interrupt;
     exti_init.EXTI_Trigger = EXTI_Trigger_Falling;

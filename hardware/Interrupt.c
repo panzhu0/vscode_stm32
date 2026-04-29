@@ -9,17 +9,17 @@ void EXTI15_10_IRQHandler(void){
         EXTI_ClearITPendingBit(EXTI_Line14);
     }
 
-    if(EXTI_GetITStatus(EXTI_Line12)!=RESET){
+    if(EXTI_GetITStatus(EXTI_Line11)!=RESET){
         if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_8) == Bit_SET){
             count_r -=1;
         }
-        EXTI_ClearITPendingBit(EXTI_Line12);
+        EXTI_ClearITPendingBit(EXTI_Line11);
     }
 }
 
 void EXTI9_5_IRQHandler(void){
     if(EXTI_GetITStatus(EXTI_Line8)!=RESET){
-        if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_12) == Bit_SET){
+        if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_11) == Bit_SET){
             count_r+=1;
         }
         EXTI_ClearITPendingBit(EXTI_Line8);
