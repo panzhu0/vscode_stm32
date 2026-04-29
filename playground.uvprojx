@@ -785,6 +785,11 @@
               <FileType>5</FileType>
               <FilePath>.\hardware\Fun.h</FilePath>
             </File>
+            <File>
+              <FileName>Interrupt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\hardware\Interrupt.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

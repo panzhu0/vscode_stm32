@@ -1,17 +1,15 @@
 #include "stm32f10x.h"
 #include "OLED.h"
-#include "Delay.h"
 
 #include "Fun.h"
-
-int main(){
+int main(void){
     OLED_Init();
-    OLED_ShowString(1,1,"Hello world");
     Fun_Init();
-    Fun_EXTI_Init();
+    OLED_ShowString(1,1,"CNT: ");
+    OLED_ShowString(2,1,"CNT_R: ");
 
     while(1){
-        Delay_ms(500);
-        GPIO_ResetBits(GPIOB,GPIO_Pin_12);
+        OLED_ShowNum(1,7,Get_Count(),4);
+        OLED_ShowNum(2,7,Get_Count_R(),4);
     };
 }

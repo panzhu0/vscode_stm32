@@ -40,22 +40,6 @@ void Rotary_Init(void){
 
 }
 
-void EXTI15_10_IRQHandler(void){
-    if(EXTI_GetITStatus(EXTI_Line11) != RESET){
-        // Pin 8's status
-        if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_8) != GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_11)) count_rotary+=1;
-
-        EXTI_ClearITPendingBit(EXTI_Line11);
-    }
-}
-
-// void EXTI9_5_IRQHandler(void){
-//     if(EXTI_GetITStatus(EXTI_Line8) != RESET){
-//         if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_11) != GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_8)) count_rotary-=1;
-
-//         EXTI_ClearITPendingBit(EXTI_Line8);
-//     }
-// }
 
 int16_t Get_Count_Rotary(void){
     return count_rotary;
