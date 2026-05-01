@@ -6,9 +6,11 @@
 int main(void){
     OLED_Init();
     Fun_Init();
-    OLED_ShowString(1,1,"CNT: ");
+    OLED_ShowString(1,1,"AD1: ");
+    OLED_ShowString(2,1,"AD2: ");
+    OLED_ShowString(3,1,"AD3: ");
+    OLED_ShowString(4,1,"AD4: ");
     while(1){
-        OLED_ShowSignedNum(1,6,Get_CNT(),5);
-        Delay_ms(500);  // Use TIM interrupt better that Delay_ms!!!
-    };
+        OLED_ShowNum(1,6,Get_AD(),4);
+    }
 }
