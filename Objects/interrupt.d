@@ -28,4 +28,3 @@
 .\objects\interrupt.o: .\library\stm32f10x_usart.h
 .\objects\interrupt.o: .\library\stm32f10x_wwdg.h
 .\objects\interrupt.o: .\library\misc.h
-.\objects\interrupt.o: .\system\Delay.h
