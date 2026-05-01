@@ -5,8 +5,8 @@
 
 int main(void){
     OLED_Init();
-    Fun_DMA_Init();
     Fun_Init();
+    Fun_DMA_Init();
 
     OLED_ShowString(1,1,"AD1: ");
     OLED_ShowString(2,1,"AD2: ");
@@ -14,7 +14,6 @@ int main(void){
     OLED_ShowString(4,1,"AD4: ");
 
     while(1){
-        Fun_DMA_Trans();
         OLED_ShowNum(1,6,AD_Val[0],4);
         OLED_ShowNum(2,6,AD_Val[1],4);
         OLED_ShowNum(3,6,AD_Val[2],4);

@@ -20,7 +20,7 @@ void Fun_Init(void){
     adc_init.ADC_DataAlign = ADC_DataAlign_Right;
     adc_init.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
     adc_init.ADC_Mode = ADC_Mode_Independent;
-    adc_init.ADC_ContinuousConvMode = DISABLE;  // Only Convert Once when called
+    adc_init.ADC_ContinuousConvMode = ENABLE;  // Only Convert Once when called
     adc_init.ADC_ScanConvMode = ENABLE;    // Only CH1 work
     adc_init.ADC_NbrOfChannel = 4;
     ADC_Init(ADC1,&adc_init);
@@ -38,6 +38,7 @@ void Fun_Init(void){
     while(ADC_GetResetCalibrationStatus(ADC1) == SET);
     ADC_StartCalibration(ADC1);
     while(ADC_GetCalibrationStatus(ADC1) == SET);
+
     ADC_SoftwareStartConvCmd(ADC1,ENABLE);
 }
 
@@ -64,7 +65,7 @@ void Fun_DMA_Init(){
     dma_init.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord; 
     dma_init.DMA_MemoryInc = DMA_MemoryInc_Disable;
 
-    dma_init.DMA_Mode = DMA_Mode_Normal;
+    dma_init.DMA_Mode = DMA_Mode_Circular;
     dma_init.DMA_PeripheralBaseAddr = (uint32_t)AD_Val;
     dma_init.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
     dma_init.DMA_PeripheralInc = DMA_PeripheralInc_Enable;
@@ -72,15 +73,6 @@ void Fun_DMA_Init(){
     dma_init.DMA_Priority = DMA_Priority_Medium;
 
     DMA_Init(DMA1_Channel1,&dma_init);
-}
 
-void Fun_DMA_Trans(void){
-    DMA_Cmd(DMA1_Channel1,DISABLE);
-    DMA_SetCurrDataCounter(DMA1_Channel1,4);
     DMA_Cmd(DMA1_Channel1,ENABLE);
-
-    ADC_SoftwareStartConvCmd(ADC1,ENABLE);
-
-    while(DMA_GetFlagStatus(DMA1_FLAG_TC1) == RESET);
-    DMA_ClearFlag(DMA1_FLAG_TC1);
 }
