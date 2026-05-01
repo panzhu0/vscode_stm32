@@ -5,6 +5,7 @@ void Fun_Init(void){
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1,ENABLE);
 
+
     // GPIO
     GPIO_InitTypeDef init;
     init.GPIO_Mode = GPIO_Mode_AIN;
@@ -38,4 +39,35 @@ uint16_t Get_AD(uint8_t ADC_Channel){
 
     // while(ADC_GetFlagStatus(ADC1,ADC_FLAG_EOC) == RESET);
     return ADC_GetConversionValue(ADC1);
+}
+
+void Fun_DMA_Init(uint32_t MemAddr, uint32_t PeriphAddr,uint32_t Size){
+    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1,ENABLE);
+
+    DMA_InitTypeDef dma_init;
+    dma_init.DMA_BufferSize = Size;
+    dma_init.DMA_DIR = DMA_DIR_PeripheralDST;
+    dma_init.DMA_M2M = DMA_M2M_Enable;
+    dma_init.DMA_MemoryBaseAddr = MemAddr;
+    dma_init.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte; 
+    dma_init.DMA_MemoryInc = DMA_MemoryInc_Enable;
+    dma_init.DMA_Mode = DMA_Mode_Normal;
+    dma_init.DMA_PeripheralBaseAddr = PeriphAddr;
+    dma_init.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+    dma_init.DMA_PeripheralInc = DMA_PeripheralInc_Enable;
+    dma_init.DMA_Priority = DMA_Priority_Medium;
+
+    DMA_Init(DMA1_Channel1,&dma_init);
+}
+
+void Fun_DMA_Trans(void){
+
+    DMA_Cmd(DMA1_Channel1,DISABLE);
+
+    DMA_SetCurrDataCounter(DMA1_Channel1,4);
+
+    DMA_ClearFlag(DMA1_FLAG_TC1);
+    DMA_Cmd(DMA1_Channel1,ENABLE);
+
+    while(DMA_GetFlagStatus(DMA1_FLAG_TC1) == RESET);
 }
