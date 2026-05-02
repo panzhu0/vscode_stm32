@@ -5,7 +5,18 @@
 int main(void){
     OLED_Init();
     Serial_Init();
-    Serial_Send(0x41);
+    // Byte
+    // Serial_SendBy('a');
 
-    while(1){};
+    // Array
+    // uint8_t MyArray[] = {0x41,0x42,'c','d'};
+    // Serial_SendArray(MyArray,4);
+
+    // Str
+    // Serial_SendString("Hello world! \r\n \r\n Ni Hao!");
+
+    // Num
+    Serial_SendNum(12345,5);
+
+    while (1){};
 }
