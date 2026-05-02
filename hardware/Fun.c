@@ -1,38 +1,33 @@
 #include "stm32f10x.h"
 
-// TIM 
-void Fun_Init(void){
-    // TIM2 Encoder
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE);
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
+// ADC  
+void Fun_Init(uint32_t AddrA,uint32_t AddrB){
+    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
 
-    GPIO_InitTypeDef init;
-    init.GPIO_Mode = GPIO_Mode_IPU;
-    init.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1;
-    GPIO_Init(GPIOA,&init);
+    DMA_InitTypeDef dma_init;
+    dma_init.DMA_BufferSize = 4;
+    dma_init.DMA_DIR = DMA_DIR_PeripheralDST;
+    dma_init.DMA_M2M = DMA_M2M_Enable;
+    dma_init.DMA_MemoryBaseAddr = AddrA;
+    dma_init.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+    dma_init.DMA_MemoryInc = DMA_MemoryInc_Enable;
+    dma_init.DMA_Mode = DMA_Mode_Normal;
+    dma_init.DMA_PeripheralBaseAddr = AddrB;
+    dma_init.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+    dma_init.DMA_PeripheralInc = DMA_PeripheralInc_Enable;
+    dma_init.DMA_Priority = DMA_Priority_Medium;
 
-    TIM_TimeBaseInitTypeDef timebase_init;
-    timebase_init.TIM_ClockDivision = TIM_CKD_DIV1;
-    timebase_init.TIM_CounterMode = TIM_CounterMode_Up;
-    timebase_init.TIM_Period = 65536-1;
-    timebase_init.TIM_Prescaler = 1-1;
-    timebase_init.TIM_RepetitionCounter = 0;
-    TIM_TimeBaseInit(TIM2,&timebase_init);
-
-    TIM_ICInitTypeDef ic_init;
-    TIM_ICStructInit(&ic_init);
-    ic_init.TIM_Channel = TIM_Channel_1;
-    ic_init.TIM_ICFilter = 0xF;
-    TIM_ICInit(TIM2,&ic_init);
-    ic_init.TIM_Channel = TIM_Channel_2;
-    ic_init.TIM_ICFilter = 0xF;
-    TIM_ICInit(TIM2,&ic_init);
-
-    TIM_EncoderInterfaceConfig(TIM2,TIM_EncoderMode_TI12,TIM_ICPolarity_Rising,TIM_ICPolarity_Rising);
-
-    TIM_Cmd(TIM2,ENABLE);
+    DMA_Init(DMA1_Channel1,&dma_init);
 }
 
-uint16_t GetVal(void){
-    return TIM_GetCounter(TIM2);
+
+void DMA_Trans(void){
+    DMA_Cmd(DMA1_Channel1,DISABLE);
+    DMA_ClearFlag(DMA1_FLAG_TC1);
+
+    DMA_SetCurrDataCounter(DMA1_Channel1,4);
+
+    DMA_Cmd(DMA1_Channel1,ENABLE);
+
+    while(DMA_GetFlagStatus(DMA1_FLAG_TC1) == RESET);
 }
