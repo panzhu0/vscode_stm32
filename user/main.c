@@ -2,28 +2,16 @@
 #include "OLED.h"
 #include "Serial.h"
 
+uint8_t RxData;
+
 int main(void){
     OLED_Init();
     Serial_Init();
-    // Byte
-    // Serial_SendBy('a');
 
-    // Array
-    // uint8_t MyArray[] = {0x41,0x42,'c','d'};
-    // Serial_SendArray(MyArray,4);
-
-    // Str
-    // Serial_SendString("Hello world! \r\n \r\n Ni Hao!");
-
-    // Num
-    // Serial_SendNum(12345,5);
-
-    // printf("Num = %d \r\n",666);
-
-    // char String[100];
-    // sprintf(String,"Num = %d\r\n",666); // sprintf() : return a formatted String 
-    // Serial_SendString(String);
-
-    Serial_Printf("Num = %d\r\n",666);
-    while (1){};
+    while (1){
+        if(USART_GetFlagStatus(USART1,USART_FLAG_RXNE) == SET){ // receive register not empty
+            RxData = USART_ReceiveData(USART1);     // After Received USART_FLAG_RXNE auto -> RESET
+            OLED_ShowHexNum(1,1,RxData,2);
+        }
+    };
 }
