@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+uint8_t Serial_RxData;
+uint8_t Serial_RxFlag;
+
 void Serial_Init(void){
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1,ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
@@ -25,6 +28,16 @@ void Serial_Init(void){
     usart_init.USART_StopBits = USART_StopBits_1;
     usart_init.USART_WordLength = USART_WordLength_8b;
     USART_Init(USART1,&usart_init);
+    // USART IT
+    USART_ITConfig(USART1,USART_IT_RXNE,ENABLE);
+
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+    NVIC_InitTypeDef nvic_init;
+    nvic_init.NVIC_IRQChannel = USART1_IRQn;
+    nvic_init.NVIC_IRQChannelCmd = ENABLE;
+    nvic_init.NVIC_IRQChannelPreemptionPriority = 1;
+    nvic_init.NVIC_IRQChannelSubPriority = 1;
+    NVIC_Init(&nvic_init);
 
     USART_Cmd(USART1,ENABLE);
 }
@@ -72,4 +85,16 @@ void Serial_Printf(char* format,...){
     vsprintf(String,format,arg);
     va_end(arg);
     Serial_SendString(String);
+}
+
+uint8_t Serial_GetRxFlag(void){
+    if(Serial_RxFlag == 1){
+        Serial_RxFlag = 0;
+        return 1;
+    }
+    return 0;
+}
+
+uint8_t Serial_GetRxData(void){
+    return Serial_RxData;
 }

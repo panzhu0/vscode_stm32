@@ -7,11 +7,14 @@ uint8_t RxData;
 int main(void){
     OLED_Init();
     Serial_Init();
+    OLED_ShowString(1,1,"RxData: ");
 
     while (1){
-        if(USART_GetFlagStatus(USART1,USART_FLAG_RXNE) == SET){ // receive register not empty
-            RxData = USART_ReceiveData(USART1);     // After Received USART_FLAG_RXNE auto -> RESET
-            OLED_ShowHexNum(1,1,RxData,2);
+        // Receive from USART and resend to sender.
+        if(Serial_GetRxFlag() == 1){
+            RxData = Serial_GetRxData();
+            Serial_SendByte(RxData);
+            OLED_ShowHexNum(1,9,RxData,2);
         }
     };
 }
