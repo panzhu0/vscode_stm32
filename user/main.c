@@ -20,9 +20,10 @@ int main(void){
 
     // printf("Num = %d \r\n",666);
 
-    char String[100];
-    sprintf(String,"Num = %d\r\n",666); // sprintf() : return a formatted String 
-    Serial_SendString(String);
+    // char String[100];
+    // sprintf(String,"Num = %d\r\n",666); // sprintf() : return a formatted String 
+    // Serial_SendString(String);
 
+    Serial_Printf("Num = %d\r\n",666);
     while (1){};
 }
