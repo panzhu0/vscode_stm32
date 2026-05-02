@@ -18,7 +18,11 @@ int main(void){
     // Num
     // Serial_SendNum(12345,5);
 
-    printf("Num = %d \r\n",666);
+    // printf("Num = %d \r\n",666);
+
+    char String[100];
+    sprintf(String,"Num = %d\r\n",666); // sprintf() : return a formatted String 
+    Serial_SendString(String);
 
     while (1){};
 }
