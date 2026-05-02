@@ -30,3 +30,4 @@
 .\objects\main.o: .\library\misc.h
 .\objects\main.o: .\hardware\OLED.h
 .\objects\main.o: .\hardware\Serial.h
+.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

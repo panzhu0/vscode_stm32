@@ -1,4 +1,5 @@
 #include "stm32f10x.h"
+#include <stdio.h>
 
 void Serial_Init(void){
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1,ENABLE);
@@ -49,4 +50,10 @@ uint32_t Serial_Pow(uint32_t X,uint32_t Y){
 void Serial_SendNum(uint32_t Num,uint16_t Length){
     int16_t i = 0;
     for(i=0;i<Length;i++) Serial_SendByte(  Num / Serial_Pow(10,Length-i-1) %10  + '0' );
+}
+
+// Redirect
+int fputc(int ch,FILE* f){
+    Serial_SendByte(ch);
+    return ch;
 }

@@ -16,7 +16,9 @@ int main(void){
     // Serial_SendString("Hello world! \r\n \r\n Ni Hao!");
 
     // Num
-    Serial_SendNum(12345,5);
+    // Serial_SendNum(12345,5);
+
+    printf("Num = %d \r\n",666);
 
     while (1){};
 }
