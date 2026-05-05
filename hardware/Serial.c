@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-uint8_t Serial_RxData;
+uint8_t Serial_TxPkt[4];
+uint8_t Serial_RxPkt[4];
 uint8_t Serial_RxFlag;
 
 void Serial_Init(void){
@@ -95,6 +96,10 @@ uint8_t Serial_GetRxFlag(void){
     return 0;
 }
 
-uint8_t Serial_GetRxData(void){
-    return Serial_RxData;
+void Serial_SendPkt(void){
+    Serial_SendByte(0xff);  // START
+    Serial_SendArray(Serial_TxPkt,4);
+    Serial_SendByte(0xfe);  // END
 }
+
+
