@@ -12,18 +12,21 @@ void USART1_IRQHandler(void){
         uint8_t RxData = USART_ReceiveData(USART1);
 
         if(RxState == 0){
-            if(RxData == 0xff){
+            if(RxData == '@'){
                 RxState = 1;
             }
         }else if(RxState == 1){
-            Serial_RxPkt[pRxPkt++] = RxData;
-            if(pRxPkt>=4){
-                RxState=2;
-                pRxPkt = 0;
+            if(RxData == '\r'){
+                RxState =2;
+            }else{
+                Serial_RxPkt[pRxPkt++] = RxData;
             }
+
         }else if(RxState == 2){
-            if(RxData == 0xFE){
+            if(RxData == '\n'){
                 RxState=0;
+                Serial_RxPkt[pRxPkt] = '\0';
+                pRxPkt = 0;
                 Serial_RxFlag = 1; // Receive a valid packet
             }
         }

@@ -2,14 +2,10 @@
 #define __SERIAL_H
 #include <stdio.h>
 
-extern uint8_t Serial_RxData;
 extern uint8_t Serial_RxFlag;
-extern uint8_t Serial_TxPkt[4];
-extern uint8_t Serial_RxPkt[4];
+extern char Serial_RxPkt[];
 
-uint8_t Serial_GetRxData(void);
 uint8_t Serial_GetRxFlag(void);
-void Serial_SendPkt(void);
 
 void Serial_Init(void);
 void Serial_SendByte(uint8_t Byte);
