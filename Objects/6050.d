@@ -30,3 +30,4 @@
 .\objects\6050.o: .\library\misc.h
 .\objects\6050.o: hardware\MyI2C.h
 .\objects\6050.o: .\system\Delay.h
+.\objects\6050.o: hardware\6050_Reg.h
