@@ -1,35 +1,20 @@
 #include "stm32f10x.h"
 #include "OLED.h"
-#include "Serial.h"
 #include "string.h"
 #include "Fun.h"
+#include "MyI2C.h"
 
 int main(void){
     OLED_Init();
-    Serial_Init();
-    Fun_Init();
-    OLED_ShowString(1,1,"Working ...");
+    MyI2C_Init();
 
-    while (1){
-        if(Serial_GetRxFlag() == 1){
-            OLED_ShowString(4,1,"               ");
-            OLED_ShowString(4,1,Serial_RxPkt);
-            
-            if(strcmp(Serial_RxPkt,"LED_ON") == 0 ){
-                LED_ON();
-                Serial_SendString("LED_ON_OK\r\n");
-                OLED_ShowString(2,1,"               ");
-                OLED_ShowString(2,1,"LED_ON_OK");
-            }else if(strcmp(Serial_RxPkt,"LED_OFF") == 0 ){
-                LED_OFF();
-                Serial_SendString("LED_OFF_OK\r\n");
-                OLED_ShowString(2,1,"               ");
-                OLED_ShowString(2,1,"LED_OFF_OK");
-            }else{
-                Serial_SendString("ERROR_COMMAND\r\n");
-                OLED_ShowString(2,1,"               ");
-                OLED_ShowString(2,1,"ERROR_COMMAND");
-            }
-        }
-    };
+    MyI2C_Start();
+    MyI2C_SendByte(0xD0);   // 1101 000 0
+    uint8_t AckBit;
+    AckBit = MyI2C_RecvAck();
+    MyI2C_Stop();
+
+    OLED_ShowNum(1,1,AckBit,3);
+
+    while(1){};
 }

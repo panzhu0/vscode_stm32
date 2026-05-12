@@ -29,7 +29,7 @@
 .\objects\main.o: .\library\stm32f10x_wwdg.h
 .\objects\main.o: .\library\misc.h
 .\objects\main.o: .\hardware\OLED.h
-.\objects\main.o: .\hardware\Serial.h
-.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\main.o: .\hardware\Fun.h
+.\objects\main.o: .\hardware\MyI2C.h
+.\objects\main.o: .\system\Delay.h
