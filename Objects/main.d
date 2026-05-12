@@ -30,6 +30,4 @@
 .\objects\main.o: .\library\misc.h
 .\objects\main.o: .\hardware\OLED.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-.\objects\main.o: .\hardware\Fun.h
-.\objects\main.o: .\hardware\MyI2C.h
-.\objects\main.o: .\system\Delay.h
+.\objects\main.o: .\hardware\6050.h

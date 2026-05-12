@@ -1,20 +1,23 @@
 #include "stm32f10x.h"
 #include "OLED.h"
 #include "string.h"
-#include "Fun.h"
-#include "MyI2C.h"
+#include "6050.h"
 
 int main(void){
     OLED_Init();
-    MyI2C_Init();
+    MPU6050_Init();
 
-    MyI2C_Start();
-    MyI2C_SendByte(0xD0);   // 1101 000 0
-    uint8_t AckBit;
-    AckBit = MyI2C_RecvAck();
-    MyI2C_Stop();
+    // Read ID
+    uint8_t ID = MPU6050_ReadReg(0x75);
+    OLED_ShowHexNum(1,1,ID,2);
 
-    OLED_ShowNum(1,1,AckBit,3);
+    // End sleep
+    MPU6050_WriteReg(0x6B,0x00);
+
+    // Write to Reg and read it .
+    MPU6050_WriteReg(0x19,0xAB);
+    ID= MPU6050_ReadReg(0x19);
+    OLED_ShowHexNum(2,1,ID,2);
 
     while(1){};
 }
